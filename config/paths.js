@@ -14,6 +14,7 @@ function resolveApp(relativePath) {
 module.exports = {
     appSrc: resolveApp('src'),
     appBuild: resolveApp('build'),
+    appConfig: resolveApp('config'),
     appPublic: resolveApp('public'),
     appEntry: resolveApp('src/index.js'),
     nodeModules: resolveApp('node_modules'),

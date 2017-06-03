@@ -2,7 +2,6 @@
 const webpack = require('webpack')
 const paths = require('./paths')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
@@ -15,11 +14,7 @@ module.exports = {
     devtool: '#eval-source-map',
     resolve: {
         extensions: [
-            '.js',
-            '.vue',
-            '.scss',
-            '.css',
-            '.json'
+            '.js', '.vue', '.scss', '.css', '.json'
         ],
         alias: {
             'src': paths.appSrc
@@ -28,16 +23,20 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(js|vue)$/,
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                include: [paths.appSrc, paths.appConfig]
+            }, {
                 test: /\.vue$/,
-                use: {
-                    loader: 'vue-loader',
-                    options: {
-                        loaders: {
-                            'scss': 'vue-style-loader!css-loader!sass-loader',
-                            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-                        }
-                        // other vue-loader
+                loader: 'vue-loader',
+                include: [paths.appSrc],
+                options: {
+                    loaders: {
+                        'scss': 'vue-style-loader!css-loader!sass-loader',
+                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
                     }
+                    // other vue-loader
                 }
             }, {
                 test: /\.js$/,
