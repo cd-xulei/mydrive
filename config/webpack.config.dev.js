@@ -1,0 +1,67 @@
+'use strict'
+const webpack = require('webpack')
+const paths = require('./paths')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        pathinfo: true,
+        path: paths.appBuild,
+        filename: 'bundle.js'
+    },
+    devtool: '#eval-source-map',
+    resolve: {
+        extensions: [
+            '.js',
+            '.vue',
+            '.scss',
+            '.css',
+            '.json'
+        ],
+        alias: {
+            'src': paths.appSrc
+        }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                use: {
+                    loader: 'vue-loader',
+                    options: {
+                        loaders: {
+                            'scss': 'vue-style-loader!css-loader!sass-loader',
+                            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+                        }
+                        // other vue-loader
+                    }
+                }
+            }, {
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            }, {
+                test: /\.(png|jpg|gif|svg)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]?[hash]'
+                    }
+                }
+            }
+        ]
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.optimize.OccurenceOrderPlugin(),
+        new CaseSensitivePathsPlugin(),
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'prod')
+        }),
+        new HtmlWebpackPlugin({template: paths.appHtml, inject: true})
+    ]
+}
