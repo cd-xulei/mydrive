@@ -1,61 +1,71 @@
 'use strict'
 const webpack = require('webpack')
 const paths = require('./paths')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-const config = {
-    entry: './src/index.js',
+module.exports = {
+    entry: paths.appEntry,
     output: {
+        pathinfo: true,
         path: paths.appBuild,
-        filename: 'bundle.js'
+        filename: '[name].[hash].js'
     },
     bail: true,
+    devtool: 'source-map',
     resolve: {
         extensions: [
-            '',
-            '.js',
-            '.vue',
-            '.scss',
-            '.css',
-            '.json'
+            '.js', '.vue', '.scss', '.css', '.json'
         ],
-        fallback: paths.nodeModules,
         alias: {
             'src': paths.appSrc
         }
     },
-    modules: {
+    module: {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue',
+                loader: 'vue-loader',
                 options: {
-                    loaders: {
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-                    }
-                    // other vue-loader
+                    extract: true,
+                    loaders: ExtractTextPlugin.extract({
+                        use: [
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    minimize: true,
+                                    sourcMap: true
+                                }
+                            }, {
+                                loader: 'sass-loader',
+                                options: {
+                                    indentedSyntax: true,
+                                    sourcMap: true
+                                }
+                            }
+                        ],
+                        fallback: 'vue-style-loader'
+                    })
                 }
             }, {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader?presets=es2015',
                 exclude: /node_modules/
             }, {
                 test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file',
+                loader: 'file-loader',
                 options: {
                     name: '[name].[ext]?[hash]'
                 }
             }
         ]
     },
-    exterals: {},
     plugins: [
-        new webpack.NoErrorsPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
         new CaseSensitivePathsPlugin(),
         new webpack.DefinePlugin({
             PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'prod')
@@ -76,11 +86,29 @@ const config = {
                 minifyURLs: true
             }
         }),
-        //dev
-        new webpack.optimize.UglifyJsPlugin(),
-        new ExtractTextPlugin('main.css'),
-        // new CopyWebpackPlugin()
+        new ExtractTextPlugin({filename: '[name].[contenthash:8].css'}),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                comparisons: false
+            },
+            output: {
+                comments: false
+            },
+            sourceMap: true
+        }),
+        new OptimizeCSSPlugin({
+            cssProcessorOptions: {
+                safe: true
+            }
+        }),
+        new ManifestPlugin({fileName: 'asset-manifest.json'}),
+        new CopyWebpackPlugin([
+            {
+                from: paths.appPublic,
+                to: paths.appBuild,
+                ignore: ['.*']
+            }
+        ])
     ]
 }
-
-module.exports = config

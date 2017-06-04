@@ -2,14 +2,11 @@
 const fs = require('fs')
 const path = require('path')
 
-
 const appDirec = fs.realpathSync(process.cwd())
 
-function resolveApp(relativePath) {
+function resolveApp (relativePath) {
     return path.resolve(appDirec, relativePath)
 }
-
-
 
 module.exports = {
     appSrc: resolveApp('src'),

@@ -56,10 +56,9 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        // new webpack.optimize.OccurenceOrderPlugin(),
         new CaseSensitivePathsPlugin(),
         new webpack.DefinePlugin({
-            PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'prod')
+            PROD: JSON.stringify(process.env.NODE_ENV === 'prod')
         }),
         new HtmlWebpackPlugin({template: paths.appHtml, inject: true})
     ]
