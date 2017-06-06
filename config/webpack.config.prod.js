@@ -1,12 +1,33 @@
 'use strict'
 const webpack = require('webpack')
 const paths = require('./paths')
+
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+
+const cssLoader = {
+    loader: 'css-loader',
+    options: {
+        minimize: true,
+        sourceMap: true
+    }
+}
+
+// TODO: 增加 autoprefixer
+function generateLoaders (loader, loaderOptions) {
+    let loaders = [cssLoader]
+    if (loader) {
+        loaders.push({
+            loader: loader + '-loader',
+            options: Object.assign({}, loaderOptions, {sourceMap: true})
+        })
+    }
+    return ExtractTextPlugin.extract({use: loaders, fallback: 'vue-style-loader'})
+}
 
 module.exports = {
     entry: paths.appEntry,
@@ -31,25 +52,12 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    extract: true,
-                    loaders: ExtractTextPlugin.extract({
-                        use: [
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    minimize: true,
-                                    sourcMap: true
-                                }
-                            }, {
-                                loader: 'sass-loader',
-                                options: {
-                                    indentedSyntax: true,
-                                    sourcMap: true
-                                }
-                            }
-                        ],
-                        fallback: 'vue-style-loader'
-                    })
+                    loaders: {
+                        css: generateLoaders(),
+                        postcss: generateLoaders(),
+                        sass: generateLoaders('sass', {indentedSyntax: true}),
+                        scss: generateLoaders('sass')
+                    }
                 }
             }, {
                 test: /\.js$/,
