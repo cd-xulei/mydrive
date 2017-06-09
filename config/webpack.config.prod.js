@@ -62,7 +62,7 @@ module.exports = {
             }, {
                 test: /\.js$/,
                 loader: 'babel-loader?presets=es2015',
-                exclude: /node_modules/
+                include: [paths.appSrc]
             }, {
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',

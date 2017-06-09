@@ -42,7 +42,8 @@ module.exports = {
                 test: /\.js$/,
                 use: {
                     loader: 'babel-loader'
-                }
+                },
+                include: [paths.appSrc]
             }, {
                 test: /\.(png|jpg|gif|svg)$/,
                 use: {
@@ -62,7 +63,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: paths.appHtml,
+            template: paths.appSrc,
             inject: true
          })
     ]
