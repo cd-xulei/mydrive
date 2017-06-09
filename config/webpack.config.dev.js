@@ -60,6 +60,10 @@ module.exports = {
         new webpack.DefinePlugin({
             PROD: JSON.stringify(process.env.NODE_ENV === 'prod')
         }),
-        new HtmlWebpackPlugin({template: paths.appHtml, inject: true})
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: paths.appHtml,
+            inject: true
+         })
     ]
 }

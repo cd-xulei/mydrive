@@ -1,10 +1,15 @@
 <template>
 <div id="app">
     <p class='mydrive'>{{msg}}</p>
+    <mt-button type="default">default</mt-button>
+    <mt-button type="primary">primary</mt-button>
+    <mt-button type="danger">danger</mt-button>
 </div>
 </template>
 
 <script>
+
+
 export default {
     name: 'app',
     data () {
@@ -16,7 +21,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -25,9 +29,8 @@ export default {
     color: #2c3e50;
     margin-top: 60px;
 }
-.mydrive{
+.mydrive {
     text-align: center;
     font-size: 24px;
 }
-
 </style>
