@@ -1,13 +1,19 @@
 <template>
 <div id="app">
     <p class='mydrive'>{{msg}}</p>
+    <mt-button type="default">default</mt-button>
+    <mt-button type="primary">primary</mt-button>
+    <mt-button type="danger">danger</mt-button>
 </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import { Button } from 'mint-ui'
+Vue.component(Button.name, Button)
 
 export default {
-    name: 'app',
+    name: 'home',
     data () {
         return {
             msg: 'Welcome to mydrive'
@@ -18,12 +24,11 @@ export default {
 
 <style lang="scss">
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    display: flex;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .mydrive {
     text-align: center;

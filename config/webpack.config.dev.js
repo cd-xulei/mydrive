@@ -4,6 +4,13 @@ const paths = require('./paths')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
+const cssLoader = {
+    loader: 'css-loader',
+    options: {
+        sourceMap: true
+    }
+}
+
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -11,10 +18,10 @@ module.exports = {
         path: paths.appBuild,
         filename: 'bundle.js'
     },
-    devtool: '#eval-source-map',
+    devtool: '#cheap-module-eval-source-map',
     resolve: {
         extensions: [
-            '.js', '.vue', '.scss', '.css', '.json'
+            '.js', '.vue', '.json'
         ],
         alias: {
             'src': paths.appSrc
@@ -39,6 +46,12 @@ module.exports = {
                     // other vue-loader
                 }
             }, {
+                test: /\.css$/,
+                use: ['style-loader', cssLoader]
+            }, {
+                test: /\.scss$/,
+                use: ['style-loader', cssLoader, 'sass-loader']
+            }, {
                 test: /\.js$/,
                 use: {
                     loader: 'babel-loader'
@@ -61,10 +74,9 @@ module.exports = {
         new webpack.DefinePlugin({
             PROD: JSON.stringify(process.env.NODE_ENV === 'prod')
         }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: paths.appSrc,
-            inject: true
-         })
-    ]
+        new HtmlWebpackPlugin({filename: 'index.html', template: paths.appHtml, inject: true})
+    ],
+    externals: {
+        lodash: 'window._'
+    }
 }
