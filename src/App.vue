@@ -5,7 +5,10 @@
             <mt-tab-item id="2">首页</mt-tab-item>
             <mt-tab-item id="3">添加</mt-tab-item>
         </mt-navbar>
+        <router-link to="/foo">Go to Foo</router-link>
+        <router-link to="/bar">Go to Bar</router-link>
         <p class='mydrive'>{{msg}}</p>
+        <router-view></router-view>
     </div>
 </template>
 

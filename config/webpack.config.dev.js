@@ -24,7 +24,8 @@ module.exports = {
             '.js', '.vue', '.json'
         ],
         alias: {
-            'src': paths.appSrc
+            'src': paths.appSrc,
+            'vue': 'vue/dist/vue.js'
         }
     },
     module: {
