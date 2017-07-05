@@ -10,6 +10,7 @@ import 'mint-ui/lib/style.css'
 import './main.scss'
 
 Vue.use(VueRouter)
+
 // NOTE: 严格遵守该写法
 new Vue({
     router: router,
