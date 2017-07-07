@@ -73,7 +73,9 @@ function runDevServer (host, port, protocol) {
         // 从 public 读取静态资源
         contentBase: paths.appPublic,
         // 热加载
-        hot: true,
+        historyApiFallback: true,
+        hot: false,
+        inline: true,
         // publicPath: config.output.publicPath,
         // 屏蔽 webpack 的错误和警告信息
         quiet: true,
