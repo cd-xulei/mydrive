@@ -1,7 +1,7 @@
 <template>
     <div class='app'>
         <mt-header title='驾考一点通'></mt-header>
-        <div class='username'> </div>
+        <div class='username'>Hello</div>
         <my-card type='one'></my-card>
         <my-card type='four' marginTop='30'></my-card>
     </div>
@@ -30,15 +30,20 @@ export default {
 $menu-one: menu-one;
 .app {
     display: flex;
-    flex: 1;
+    height: 100%;
+    width: 100%;
     flex-direction: column;
     background-color: #F3F7FA;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
     &>.mint-header {
         background-color: #00C355;
     }
     &>.username {
-        height: 100px;
+        height: 80px;
         background-color: #00C355;
+        color:#FFF;
+        padding-left: 20vw;
     }
 }
 </style>
