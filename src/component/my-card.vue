@@ -3,7 +3,7 @@
         <h4 class='menu__title'>{{title}}</h4>
         <div class='menu__content'>
             <div class='exercise'>
-                <span class='remark'>已完成题库</span>
+                <router-link to="/exercise"><span class='remark'>已完成题库</span></router-link>
                 <span class='amount'>未练习</span>
                 <a class='btn'>考题练习</a>
             </div>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 
 export default {
     name: 'my-card',
@@ -69,6 +68,7 @@ $base-color: #00C35D;
         display: flex;
         flex-direction: row;
         justify-content: center;
+        margin: 10px 0;
         border: {
             width: thin 0 thin 0;
             style: solid;
@@ -90,6 +90,9 @@ $base-color: #00C35D;
         @extend .remark;
         flex: 1;
         flex-direction: row;
+        // 覆盖webkit
+        padding-left: 0;
+        justify-content: space-around;
         & > .li{
             display: flex;
             flex-direction: column;

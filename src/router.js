@@ -1,10 +1,11 @@
 import VueRouter from 'vue-router'
 
-const Foo = {template: '<div>哈哈哈嘻嘻嘻</div>'}
 const Bar = {template: '<div>啧啧啧啧呱刮骨</div>'}
 
+const Exercise = require('./pages/Exercise')
+
 const routes = [
-    {path: '/foo', component: Foo},
+    {path: '/exercise', component: Exercise},
     {path: '/bar', component: Bar}
 ]
 
