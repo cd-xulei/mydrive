@@ -7,6 +7,13 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const cssLoader = {
+    loader: 'css-loader',
+    options: {
+        sourceMap: true
+    }
+}
+
 module.exports = {
   entry: {
     app: './src/main.js'
@@ -40,6 +47,10 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', cssLoader, 'sass-loader']
       },
       {
         test: /\.js$/,
