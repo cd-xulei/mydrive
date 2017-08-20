@@ -10,12 +10,12 @@ import { Header } from 'mint-ui'
 Vue.component(Header.name, Header)
 
 export default {
-    name: 'home',
-    data () {
-        return {
-            msg: 'Welcome to mydrive'
-        }
+  name: 'home',
+  data () {
+    return {
+      msg: 'Welcome to mydrive'
     }
+  }
 }
 </script>
 

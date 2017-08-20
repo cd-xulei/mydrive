@@ -7,7 +7,6 @@ import 'normalize.css'
 import 'mint-ui/lib/style.css'
 
 // coustom style
-import './main.scss'
 
 Vue.use(VueRouter)
 

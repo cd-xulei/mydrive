@@ -28,6 +28,8 @@ export default {
 
 <style lang="scss">
 $menu-one: menu-one;
+
+
 .app {
     display: flex;
     height: 100%;
